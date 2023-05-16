@@ -1,10 +1,28 @@
 import React from 'react'
-import { Picked } from './Picked.jsx'
+import { Order } from './Order'
+import { Link, useNavigate,} from 'react-router-dom'
+// import { Login } from './Login'
+import { Navbar} from './Navbar';
 
-function Home  () {
+
+
+function Home() {
   return (
-    <div> <Picked/> 
-    </div>
+
+ 
+  <div>
+    {/* <Login />   */}
+    <Navbar/>
+    <Order />
+    
+  </div>
+
+
+
+
+    
+
+
   )
 }
 
