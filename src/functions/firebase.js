@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber  } from "firebase/auth";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getDatabase, ref, update } from "firebase/database";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCvH7faWzCTidZEJzQWAN_srJ3-hCGhbmA",
   authDomain: "delivery-corpoeats.firebaseapp.com",
@@ -15,6 +17,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 const auth = getAuth(app);
+const database = getDatabase(app);
 
 export async function login(phoneNumber) {
     window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
@@ -35,7 +38,9 @@ export async function login(phoneNumber) {
 export async function RegNotif() {
   getToken(messaging, { vapidKey: 'BOczY8hEJod5Qjliii4ZAoS8j0rNd1zjIHkQdFUEc4Jr5sWVC68amrBQ2zYDNK2kNIpuSlOlDLHy-6WqZKfubiM' }).then((currentToken) => {
     if (currentToken) {
-      console.log(currentToken)
+      update(ref(database, 'users/' + auth.currentUser.uid), {
+        notificationToken: currentToken
+      })
     } else {
       // Show permission request UI
       console.log('No registration token available. Request permission to generate one.');

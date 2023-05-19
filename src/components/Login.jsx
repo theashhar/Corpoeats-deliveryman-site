@@ -1,5 +1,4 @@
-import {Link} from 'react-router-dom'
-import logo_white from '../assets/logo_white.svg'
+import logo_pink from '../assets/logo_pink.svg'
 import login_icon from '../assets/login_icon.svg'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -16,7 +15,7 @@ export const Login = () => {
 
 <div className='flex flex-col items-center pt-10   bg-logored rounded-xl h-screen overflow-hidden'>
  
- <img className=' w-40 max-sm:mt-10' src={logo_white} />
+ <img className=' w-40 max-sm:mt-10' src={logo_pink} />
  <img className=' w-16 mt-16 text-white' src={login_icon} />  
   <div className="flex flex-col justify-center items-center py-2">
       <input type="tel" placeholder="Phone Number" required className=" relative py-3  my-7 flex-col px-4 md:w-full w-64 text-gray-600 focus:outline-none focus:ring-1 focus:ring-slate-900 rounded-lg text-2xl"
