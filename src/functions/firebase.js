@@ -102,9 +102,14 @@ function showNotification(notificationTitle,notificationOptions) {
     if (result === "granted") {
       navigator.serviceWorker.ready.then((registration) => {
         registration.showNotification(notificationTitle, notificationOptions);
+        registration.addEventListener('notificationclick', (event) => {
+          event.notification.close();
+          window.open('https://delivery-corpoeats.web.app/');
+        })
       });
     }
   });
+  
 }
 
   
