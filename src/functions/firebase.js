@@ -2,6 +2,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber  } from "firebase/auth";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { getDatabase, ref, update } from "firebase/database";
+import Sound from "../assets/sound.mp3"
+const event = new Event("new-order");
 
 const firebaseConfig = {
   apiKey: "AIzaSyCvH7faWzCTidZEJzQWAN_srJ3-hCGhbmA",
@@ -10,7 +12,8 @@ const firebaseConfig = {
   storageBucket: "delivery-corpoeats.appspot.com",
   messagingSenderId: "90227560297",
   appId: "1:90227560297:web:51dbabe5ac3156232e37f8",
-  measurementId: "G-116R5SKEWP"
+  measurementId: "G-116R5SKEWP",
+  databaseURL: "https://delivery-corpoeats-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
 
 // Initialize Firebase
@@ -59,12 +62,16 @@ export async function RegNotif() {
 }
 onMessage(messaging, (payload) => {
     console.log('Message received.', payload);
+    const audio = new Audio(Sound);
+  audio.play();
+    dispatchEvent(event);
     const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
   };
 
   new Notification(notificationTitle, notificationOptions);
+  showNotification(notificationTitle,notificationOptions);
   });
 
 export function isLogged(){
@@ -86,6 +93,18 @@ export function logout(){
         res = error
     }
     return res
+}
+
+navigator.serviceWorker.register("sw.js");
+
+function showNotification(notificationTitle,notificationOptions) {
+  Notification.requestPermission((result) => {
+    if (result === "granted") {
+      navigator.serviceWorker.ready.then((registration) => {
+        registration.showNotification(notificationTitle, notificationOptions);
+      });
+    }
+  });
 }
 
   

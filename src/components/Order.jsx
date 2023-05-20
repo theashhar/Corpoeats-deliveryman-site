@@ -26,6 +26,14 @@ export const Order = () => {
        setOrders(data)
         setLoading(false)
     })
+    addEventListener(
+      "new-order",
+      (e) => {
+        console.log(e.detail);
+        setRefresh(Math.random())
+      },
+      false
+    );
   },[refresh])
   return (
       <>
